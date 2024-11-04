@@ -10,6 +10,7 @@ export const Header = () => {
           pathname: "/",
           search: "",
         }}
+        prefetch="render"
       >
         <div className="flex items-center">
           <img src={logo} width="80" alt="Behangmotief"></img>
