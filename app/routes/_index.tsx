@@ -67,7 +67,7 @@ export default function Index() {
           name="search"
           defaultValue={searchParams.get("search") ?? ""}
           placeholder="Search an artist or venue..."
-          className="p-4 text-m bg-[white] w-full max-w-96 border-b-4 border-black"
+          className="appearance-none rounded-none p-4 text-m bg-[white] w-full max-w-96 border-b-4 border-black"
         />
         <button type="submit" style={{ padding: "8px 16px", fontSize: "16px" }}>
           Search

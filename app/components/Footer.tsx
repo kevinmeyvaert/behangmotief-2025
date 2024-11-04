@@ -51,15 +51,15 @@ export const Footer = () => {
             Mailing list
           </h3>
           <p>
-            I'm starting a quartery mailing list to share updates about my work.
-            Leave your mail address to stay in touch.
+            I&apos;m starting a quartery mailing list to share updates about my
+            work. Leave your mail address to stay in touch.
           </p>
           <form className="flex gap-2 mb-5 w-full justify-center">
             <input
               type="text"
               name="newsletter"
               placeholder="Your email"
-              className="p-4 text-m bg-black w-full border-b-4 border-white"
+              className="appearance-none rounded-none p-4 text-m bg-black w-full border-b-4 border-white"
             />
             <button
               type="submit"
