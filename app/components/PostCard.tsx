@@ -52,14 +52,14 @@ export const PostCard = ({
         resolutionY={50}
         punch={1}
         aria-hidden="true"
+        className="absolute"
         style={{
           maxWidth: "100%",
           paddingTop: `${aspectRatio(fallbackWidth, fallbackHeight)}%`,
-          display: loaded ? "none" : "block",
         }}
       />
       <img
-        className="w-full"
+        className="w-full absolute"
         src={`https://images.wannabes.be/S=W800,H800,PD2/${thumbnail}`}
         alt={`${artist} at ${venue}`}
         width={300}
