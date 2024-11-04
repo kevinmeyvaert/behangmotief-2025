@@ -22,7 +22,12 @@ export const Footer = () => {
           <h3 className="text-xl uppercase mb-4 font-semibold border-b-2 border-white">
             Behangmotief
           </h3>
-          <img src={profile} className="w-full mb-4" loading="lazy" />
+          <img
+            src={profile}
+            className="w-full mb-4"
+            loading="lazy"
+            alt="Kevin Meyvaert"
+          />
           <strong>Kevin Meyvaert</strong> is a Belgian freelance concert- &
           festival photographer based in Gent. Part of{" "}
           <a

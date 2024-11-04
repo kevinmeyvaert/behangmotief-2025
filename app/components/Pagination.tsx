@@ -14,7 +14,7 @@ const Number = ({ page, currentPage, path, position }: NumberProps) => {
   return (
     <li
       key={`position-${position}`}
-      className={`${page === currentPage ? "font-bold bg-black text-white px-4 py-2" : ""} ${position}`}
+      className={`${page === currentPage ? "font-bold bg-black text-white px-4 py-2" : ""} ${position} pagination-item`}
     >
       <Link to={buildLink(path, page)} prefetch="viewport">
         {page}
@@ -93,12 +93,20 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
       items[items.length - 1]?.key !== "break-left" &&
       page < currentPage - leftSide
     ) {
-      items.push(<li key="break-left">...</li>);
+      items.push(
+        <li key="break-left" className="pagination-item">
+          ...
+        </li>,
+      );
     } else if (
       items[items.length - 1]?.key !== "break-right" &&
       page > currentPage + rightSide
     ) {
-      items.push(<li key="break-right">...</li>);
+      items.push(
+        <li key="break-right" className="pagination-item">
+          ...
+        </li>,
+      );
     }
   }
 
@@ -112,7 +120,7 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
             </Link>
           </li>
         ) : null}
-        <div className="flex items-center gap-8 number">{items}</div>
+        {items}
         {hasNext ? (
           <li key={`pagination-next`}>
             <Link to={buildLink(path, currentPage + 1)} prefetch="viewport">
