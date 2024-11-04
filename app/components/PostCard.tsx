@@ -54,7 +54,7 @@ export const PostCard = ({
         }}
         loading="lazy"
       />
-      <figcaption className="absolute bottom-0 flex justify-between w-full text-black py-2 px-4 text-white">
+      <figcaption className="absolute bottom-0 flex justify-between items-end w-full text-black py-2 px-4 text-white drop-shadow gap-4">
         <p>{formatPostDate(date)}</p>
         <p className="text-l">
           {artist} — {venue}

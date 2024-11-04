@@ -8,6 +8,7 @@ import {
   Link,
   useLoaderData,
   useNavigate,
+  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { SearchQuery } from "~/types/wannabes.types";
@@ -17,6 +18,7 @@ import Pagination from "~/components/Pagination";
 import { PostCard } from "~/components/PostCard";
 import { checkThumbnails } from "~/lib/ownThumbnail";
 import { Footer } from "~/components/Footer";
+import { MasonryLoadingState } from "~/components/MasonryLoadingState";
 
 const POSTS_PER_PAGE = 15;
 
@@ -43,6 +45,7 @@ export default function Index() {
   const { posts } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { state } = useNavigation();
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +62,7 @@ export default function Index() {
       <Header />
       <form
         onSubmit={handleSearch}
-        className="flex gap-2 mb-5 w-full justify-center"
+        className="flex mb-5 w-full justify-center"
         key={searchParams.get("search")}
       >
         <input
@@ -69,33 +72,37 @@ export default function Index() {
           placeholder="Search an artist or venue..."
           className="appearance-none rounded-none p-4 text-m bg-[white] w-full max-w-96 border-b-4 border-black"
         />
-        <button type="submit" style={{ padding: "8px 16px", fontSize: "16px" }}>
+        <button type="submit" className="py-2 px-4">
           Search
         </button>
       </form>
       <main className="container highlights">
-        <Masonry
-          breakpointCols={{
-            default: 3,
-            1023: 2,
-            767: 1,
-          }}
-          className="c-masonry"
-          columnClassName="c-masonry--grid-column"
-        >
-          {posts.data.map(checkThumbnails).map((p) => (
-            <Link to="#" key={p.id}>
-              <PostCard
-                artist={p.artist.name}
-                venue={p.venue.name}
-                date={p.date}
-                thumbnail={p.thumbnail.hires}
-                dimensions={p.thumbnail.dimensions}
-                blurhash={p.thumbnail.blurhash}
-              />
-            </Link>
-          ))}
-        </Masonry>
+        {state === "loading" ? (
+          <MasonryLoadingState />
+        ) : (
+          <Masonry
+            breakpointCols={{
+              default: 3,
+              1023: 2,
+              767: 1,
+            }}
+            className="c-masonry"
+            columnClassName="c-masonry--grid-column"
+          >
+            {posts.data.map(checkThumbnails).map((p) => (
+              <Link to="#" key={p.id}>
+                <PostCard
+                  artist={p.artist.name}
+                  venue={p.venue.name}
+                  date={p.date}
+                  thumbnail={p.thumbnail.hires}
+                  dimensions={p.thumbnail.dimensions}
+                  blurhash={p.thumbnail.blurhash}
+                />
+              </Link>
+            ))}
+          </Masonry>
+        )}
         <Pagination
           limit={POSTS_PER_PAGE}
           start={posts.pagination.start}

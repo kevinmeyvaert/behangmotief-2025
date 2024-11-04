@@ -54,17 +54,14 @@ export const Footer = () => {
             I&apos;m starting a quartery mailing list to share updates about my
             work. Leave your mail address to stay in touch.
           </p>
-          <form className="flex gap-2 mb-5 w-full justify-center">
+          <form className="flex mb-5 w-full justify-center">
             <input
               type="text"
               name="newsletter"
               placeholder="Your email"
               className="appearance-none rounded-none p-4 text-m bg-black w-full border-b-4 border-white"
             />
-            <button
-              type="submit"
-              style={{ padding: "8px 16px", fontSize: "16px" }}
-            >
+            <button type="submit" className="py-2 px-4">
               Signup
             </button>
           </form>
