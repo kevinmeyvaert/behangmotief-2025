@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Blurhash } from "react-blurhash";
 import { aspectRatio, validatedBlurhash } from "~/lib/blurhash";
 import { formatPostDate } from "~/lib/date";
@@ -13,23 +13,6 @@ interface Props {
   blurhash: string;
 }
 
-const useImageLoaded = () => {
-  const [loaded, setLoaded] = useState(false);
-  const ref = useRef<HTMLImageElement>(null);
-
-  const onLoad = () => {
-    setLoaded(true);
-  };
-
-  useEffect(() => {
-    if (ref?.current && ref.current.complete) {
-      onLoad();
-    }
-  });
-
-  return { ref, loaded, onLoad };
-};
-
 export const PostCard = ({
   artist,
   venue,
@@ -38,7 +21,6 @@ export const PostCard = ({
   dimensions,
   blurhash,
 }: Props) => {
-  const { ref, loaded, onLoad } = useImageLoaded();
   const [isError, setIsError] = useState(false);
   const fallbackWidth = dimensions?.width || 800;
   const fallbackHeight = dimensions?.height || 800;
@@ -63,8 +45,6 @@ export const PostCard = ({
         src={`https://images.wannabes.be/S=W800,H800,PD2/${thumbnail}`}
         alt={`${artist} at ${venue}`}
         width={300}
-        ref={ref}
-        onLoad={onLoad}
         onError={() => {
           setIsError(true);
         }}
