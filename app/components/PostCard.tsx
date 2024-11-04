@@ -52,6 +52,7 @@ export const PostCard = ({
           maxWidth: "100%",
           display: isError ? "none" : "block",
         }}
+        loading="lazy"
       />
       <figcaption className="absolute bottom-0 flex justify-between w-full text-black py-2 px-4 text-white">
         <p>{formatPostDate(date)}</p>

@@ -16,6 +16,7 @@ import Masonry from "react-masonry-css";
 import Pagination from "~/components/Pagination";
 import { PostCard } from "~/components/PostCard";
 import { checkThumbnails } from "~/lib/ownThumbnail";
+import { Footer } from "~/components/Footer";
 
 const POSTS_PER_PAGE = 15;
 
@@ -58,7 +59,7 @@ export default function Index() {
       <Header />
       <form
         onSubmit={handleSearch}
-        className="flex gap-2 mb-5"
+        className="flex gap-2 mb-5 w-full justify-center"
         key={searchParams.get("search")}
       >
         <input
@@ -66,7 +67,7 @@ export default function Index() {
           name="search"
           defaultValue={searchParams.get("search") ?? ""}
           placeholder="Search an artist or venue..."
-          className="p-4 text-m bg-[white] w-96 border-b-4 border-black"
+          className="p-4 text-m bg-[white] w-full max-w-96 border-b-4 border-black"
         />
         <button type="submit" style={{ padding: "8px 16px", fontSize: "16px" }}>
           Search
@@ -106,9 +107,7 @@ export default function Index() {
           }
         />
       </main>
-      <footer className="w-full bg-black flex justify-center">
-        <div className="container text-white py-12">hey</div>
-      </footer>
+      <Footer />
     </div>
   );
 }

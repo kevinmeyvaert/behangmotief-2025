@@ -110,7 +110,7 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
             </Link>
           </li>
         ) : null}
-        {items}
+        <div className="flex items-center gap-8 number">{items}</div>
         {hasNext ? (
           <li key={`pagination-next`}>
             <Link to={buildLink(path, currentPage + 1)}>
