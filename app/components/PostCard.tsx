@@ -41,7 +41,7 @@ export const PostCard = ({
         }}
       />
       <img
-        className="w-full absolute"
+        className="w-full absolute drop-shadow"
         srcSet={`
           https://images.wannabes.be/S=W320,H320,PD1/${thumbnail} 320w,
           https://images.wannabes.be/S=W640,H640,PD1/${thumbnail} 640w,
@@ -65,7 +65,7 @@ export const PostCard = ({
           display: isError ? "none" : "block",
         }}
       />
-      <figcaption className="absolute bottom-0 flex justify-between items-end w-full text-black py-2 px-4 text-white drop-shadow gap-4">
+      <figcaption className="absolute bottom-0 flex justify-between items-end w-full text-black py-2 px-4 text-white gap-4">
         <p>{formatPostDate(date)}</p>
         <p className="text-l">
           {artist} — {venue}
