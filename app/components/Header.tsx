@@ -4,7 +4,7 @@ import logo from "../images/logo.svg";
 
 export const Header = () => {
   return (
-    <header className="container z-20 p-[20px_40px] flex justify-center md:justify-start items-center h-[150px]">
+    <header className="container flex justify-center md:justify-start items-center h-[150px]">
       <Link
         to={{
           pathname: "/",

@@ -7,10 +7,8 @@ body {
     min-height: 100vh;
 }
 
-.highlights figure {
+.c-masonry figure {
     transition: .2s;
-    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2);
-
     &:hover {
         transform: translateY(-10px)
     }
@@ -28,6 +26,10 @@ body {
   }
 
 .drop-shadow {
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2);
+}
+
+figcaption {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
 }
 

@@ -1,23 +1,21 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 
-import { Header } from "~/components/Header";
-
 import { fetcher } from "~/lib/api";
 import { POSTS } from "~/queries/wannabes";
 import {
+  Await,
+  defer,
   Link,
   useLoaderData,
   useNavigate,
-  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { SearchQuery } from "~/types/wannabes.types";
-import { FormEvent } from "react";
+import { FormEvent, Suspense } from "react";
 import Masonry from "react-masonry-css";
 import Pagination from "~/components/Pagination";
 import { PostCard } from "~/components/PostCard";
 import { checkThumbnails } from "~/lib/ownThumbnail";
-import { Footer } from "~/components/Footer";
 import { MasonryLoadingState } from "~/components/MasonryLoadingState";
 
 const POSTS_PER_PAGE = 15;
@@ -26,12 +24,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const searchParam = url.searchParams.get("search");
   const pageParam = url.searchParams.get("page") ?? "1";
-  const { posts } = await fetcher<SearchQuery>(POSTS, {
+  const postsPromise = fetcher<SearchQuery>(POSTS, {
     start: (parseInt(pageParam) - 1) * POSTS_PER_PAGE,
     limit: POSTS_PER_PAGE,
     all: searchParam,
   });
-  return { posts };
+  return defer({
+    posts: postsPromise,
+  });
 };
 
 export const meta: MetaFunction = () => {
@@ -42,10 +42,9 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { state } = useNavigation();
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,13 +52,15 @@ export default function Index() {
     const searchValue = (form.elements.namedItem("search") as HTMLInputElement)
       .value;
     if (searchValue) {
-      navigate(`?search=${encodeURIComponent(searchValue.trim())}&page=1`);
+      navigate({
+        pathname: "/",
+        search: `?search=${encodeURIComponent(searchValue.trim())}&page=1`,
+      });
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <Header />
+    <div className="container">
       <form
         onSubmit={handleSearch}
         className="flex mb-5 w-full justify-center"
@@ -76,45 +77,48 @@ export default function Index() {
           Search
         </button>
       </form>
-      <main className="container highlights">
-        {state === "loading" ? (
-          <MasonryLoadingState />
-        ) : (
-          <Masonry
-            breakpointCols={{
-              default: 3,
-              1023: 2,
-              767: 1,
-            }}
-            className="c-masonry"
-            columnClassName="c-masonry--grid-column"
-          >
-            {posts.data.map(checkThumbnails).map((p) => (
-              <Link to="#" key={p.id}>
-                <PostCard
-                  artist={p.artist.name}
-                  venue={p.venue.name}
-                  date={p.date}
-                  thumbnail={p.thumbnail.hires}
-                  dimensions={p.thumbnail.dimensions}
-                  blurhash={p.thumbnail.blurhash}
+      <main>
+        <Suspense fallback={<MasonryLoadingState />}>
+          <Await resolve={data.posts}>
+            {({ posts }) => (
+              <>
+                <Masonry
+                  breakpointCols={{
+                    default: 3,
+                    1023: 2,
+                    767: 1,
+                  }}
+                  className="c-masonry"
+                  columnClassName="c-masonry--grid-column"
+                >
+                  {posts.data.map(checkThumbnails).map((p) => (
+                    <Link to={`/album/${p.slug}`} key={p.id}>
+                      <PostCard
+                        artist={p.artist.name}
+                        venue={p.venue.name}
+                        date={p.date}
+                        thumbnail={p.thumbnail.hires}
+                        dimensions={p.thumbnail.dimensions}
+                        blurhash={p.thumbnail.blurhash}
+                      />
+                    </Link>
+                  ))}
+                </Masonry>
+                <Pagination
+                  limit={POSTS_PER_PAGE}
+                  start={posts.pagination.start}
+                  total={posts.pagination.total}
+                  path={
+                    searchParams.get("search")
+                      ? `?search=${searchParams.get("search")}&page=[page]`
+                      : `?page=[page]`
+                  }
                 />
-              </Link>
-            ))}
-          </Masonry>
-        )}
-        <Pagination
-          limit={POSTS_PER_PAGE}
-          start={posts.pagination.start}
-          total={posts.pagination.total}
-          path={
-            searchParams.get("search")
-              ? `?search=${searchParams.get("search")}&page=[page]`
-              : `?page=[page]`
-          }
-        />
+              </>
+            )}
+          </Await>
+        </Suspense>
       </main>
-      <Footer />
     </div>
   );
 }

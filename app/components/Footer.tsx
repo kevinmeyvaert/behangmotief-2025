@@ -17,7 +17,7 @@ export const Footer = () => {
 
   return (
     <footer className="w-full bg-black flex justify-center">
-      <div className="container text-white py-12 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
+      <div className="container text-white py-12 px-4 sm:px-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <section>
           <h3 className="text-xl uppercase mb-4 font-semibold border-b-2 border-white">
             Behangmotief
