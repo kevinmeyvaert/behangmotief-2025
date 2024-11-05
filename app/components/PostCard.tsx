@@ -42,6 +42,17 @@ export const PostCard = ({
       />
       <img
         className="w-full absolute"
+        srcSet={`
+          https://images.wannabes.be/S=W320,H320,PD1/${thumbnail} 320w,
+          https://images.wannabes.be/S=W640,H640,PD1/${thumbnail} 640w,
+          https://images.wannabes.be/S=W768,H768,PD1/${thumbnail} 768w,
+          https://images.wannabes.be/S=W1024,H1024,PD1/${thumbnail} 1024w`}
+        sizes="
+          (max-width: 767px) 100vw,
+          (max-width: 1023px) 50vw,
+          (min-width: 1024px) (max-width: 1535px) 33vw,
+          (min-width: 1536px) 25vw
+        "
         src={`https://images.wannabes.be/S=W800,H800,PD2/${thumbnail}`}
         alt={`${artist} at ${venue}`}
         width={300}

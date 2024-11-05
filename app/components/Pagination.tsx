@@ -14,7 +14,7 @@ const Number = ({ page, currentPage, path, position }: NumberProps) => {
   return (
     <li
       key={`position-${position}`}
-      className={`${page === currentPage ? "font-bold bg-black text-white px-4 py-2" : ""} ${position} pagination-item`}
+      className={`${page === currentPage ? "flex items-center justify-center font-bold bg-black text-white min-h-10 min-w-10" : ""} ${position} pagination-item`}
     >
       <Link to={buildLink(path, page)} prefetch="viewport">
         {page}
@@ -111,11 +111,15 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
   }
 
   return numberOfPages > 1 ? (
-    <div className="w-full flex justify-center p-8">
+    <div className="w-full flex justify-center pt-3 pb-8">
       <ul className="flex items-center gap-8">
         {hasPrevious ? (
           <li key={`pagination-previous`}>
-            <Link to={buildLink(path, currentPage - 1)} prefetch="viewport">
+            <Link
+              to={buildLink(path, currentPage - 1)}
+              prefetch="viewport"
+              className="flex items-center justify-center bg-black text-white px-4 min-h-10"
+            >
               ← <span>previous</span>
             </Link>
           </li>
@@ -123,7 +127,11 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
         {items}
         {hasNext ? (
           <li key={`pagination-next`}>
-            <Link to={buildLink(path, currentPage + 1)} prefetch="viewport">
+            <Link
+              to={buildLink(path, currentPage + 1)}
+              prefetch="viewport"
+              className="flex items-center justify-center bg-black text-white px-4 min-h-10"
+            >
               <span>next</span> →
             </Link>
           </li>
