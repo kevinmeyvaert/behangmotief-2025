@@ -22,26 +22,43 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { post } = await fetcher<AlbumQuery>(ALBUM, {
     slug: params["*"],
   });
-  return { post };
-};
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const description = descriptions(
-    data?.post.venue.name,
-    data?.post.artist.name,
-  )[
+  const description = descriptions(post.venue.name, post.artist.name)[
     Math.floor(
-      Math.random() *
-        descriptions(data?.post.venue.name, data?.post.artist.name).length,
+      Math.random() * descriptions(post.venue.name, post.artist.name).length,
     )
   ];
+  return { post, description };
+};
+
+export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
+  const title = `${data?.post.artist.name} live at ${data?.post.venue.name} | Behangmotief — Music & festival photographer`;
   return [
     {
-      title: `${data?.post.artist.name} live at ${data?.post.venue.name} | Behangmotief — Music- & festivalphotographer`,
+      title,
     },
     {
       name: "description",
-      content: description,
+      content: data?.description,
+    },
+    {
+      name: "og:image",
+      content: data?.post.thumbnail.resized,
+    },
+    {
+      name: "og:site_name",
+      content: "Behangmotief — Music- & festivalphotographer",
+    },
+    {
+      name: "og:title",
+      content: title,
+    },
+    {
+      name: "og:description",
+      content: data?.description,
+    },
+    {
+      name: "og:url",
+      content: `https://behangmotief.be${location.pathname}`,
     },
   ];
 };

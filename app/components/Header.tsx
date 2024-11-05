@@ -15,7 +15,7 @@ export const Header = () => {
         <div className="flex items-center">
           <img src={logo} width="80" height="55" alt="Behangmotief"></img>
           <p className="ml-2 text-xs sm:text-sm">
-            | concert- & festivalphotographer
+            | music & festival photographer
           </p>
         </div>
       </Link>

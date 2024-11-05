@@ -34,12 +34,35 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
+import profile from "../images/profile.jpg";
+
 export const meta: MetaFunction = () => {
+  const title = "Behangmotief — Music & festival photographer";
   const description =
     "Behangmotief is a music and festival photographer known for vibrant, high-contrast images that capture the energy of live performances. With a fast, reliable turnaround, Behangmotief delivers dynamic visuals full of color and motion, turning every moment into an impactful story for artists, venues, and festivals.";
   return [
-    { title: "Behangmotief — Music- & festivalphotographer" },
+    { title },
     { name: "description", content: description },
+    {
+      name: "og:image",
+      content: profile,
+    },
+    {
+      name: "og:site_name",
+      content: title,
+    },
+    {
+      name: "og:title",
+      content: title,
+    },
+    {
+      name: "og:description",
+      content: description,
+    },
+    {
+      name: "og:url",
+      content: "https://behangmotief.be",
+    },
   ];
 };
 

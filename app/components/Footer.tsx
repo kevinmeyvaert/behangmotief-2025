@@ -30,7 +30,7 @@ export const Footer = () => {
             width={428}
             height={326}
           />
-          <strong>Kevin Meyvaert</strong> is a Belgian freelance concert- &
+          <strong>Kevin Meyvaert</strong> is a Belgian freelance music &
           festival photographer based in Gent. Part of{" "}
           <a
             href="https://wannabes.be"
