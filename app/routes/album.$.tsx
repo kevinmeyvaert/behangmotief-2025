@@ -26,19 +26,22 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const description = descriptions(
+    data?.post.venue.name,
+    data?.post.artist.name,
+  )[
+    Math.floor(
+      Math.random() *
+        descriptions(data?.post.venue.name, data?.post.artist.name).length,
+    )
+  ];
   return [
     {
-      title: descriptions(data?.post.venue.name, data?.post.artist.name)[
-        Math.floor(
-          Math.random() *
-            descriptions(data?.post.venue.name, data?.post.artist.name).length,
-        )
-      ],
+      title: `${data?.post.artist.name} live at ${data?.post.venue.name} | Behangmotief — Music- & festivalphotographer`,
     },
     {
       name: "description",
-      content:
-        "Explore an electrifying collection of live festival photos capturing Equal Idiots’ unforgettable performance at Crammerock. Taken by Behangmotief, a music and festival photographer with a keen eye for vibrant, high-energy moments, these images bring you front and center to the action. ",
+      content: description,
     },
   ];
 };

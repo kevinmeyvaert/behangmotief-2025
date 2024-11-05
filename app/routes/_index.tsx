@@ -35,9 +35,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const meta: MetaFunction = () => {
+  const description =
+    "Behangmotief is a music and festival photographer known for vibrant, high-contrast images that capture the energy of live performances. With a fast, reliable turnaround, Behangmotief delivers dynamic visuals full of color and motion, turning every moment into an impactful story for artists, venues, and festivals.";
   return [
     { title: "Behangmotief — Music- & festivalphotographer" },
-    { name: "description", content: "Music- & festivalphotographer" },
+    { name: "description", content: description },
   ];
 };
 
