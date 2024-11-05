@@ -27,6 +27,8 @@ export const Footer = () => {
             className="w-full mb-4"
             loading="lazy"
             alt="Kevin Meyvaert"
+            width={428}
+            height={326}
           />
           <strong>Kevin Meyvaert</strong> is a Belgian freelance concert- &
           festival photographer based in Gent. Part of{" "}
@@ -76,6 +78,7 @@ export const Footer = () => {
           <img
             src={logo}
             width="80"
+            height="55"
             alt="Behangmotief"
             className="inline mb-4"
           ></img>

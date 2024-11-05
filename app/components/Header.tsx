@@ -13,8 +13,10 @@ export const Header = () => {
         prefetch="render"
       >
         <div className="flex items-center">
-          <img src={logo} width="80" alt="Behangmotief"></img>
-          <p className="ml-2 text-xs sm:text-sm">| concert- & festivalphotographer</p>
+          <img src={logo} width="80" height="55" alt="Behangmotief"></img>
+          <p className="ml-2 text-xs sm:text-sm">
+            | concert- & festivalphotographer
+          </p>
         </div>
       </Link>
     </header>
