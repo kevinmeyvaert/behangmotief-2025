@@ -11,6 +11,7 @@ interface Props {
   thumbnail: string;
   dimensions: Dimensions;
   blurhash: string;
+  event: string;
 }
 
 export const PostCard = ({
@@ -20,6 +21,7 @@ export const PostCard = ({
   thumbnail,
   dimensions,
   blurhash,
+  event,
 }: Props) => {
   const [isError, setIsError] = useState(false);
   const fallbackWidth = dimensions?.width || 800;
@@ -54,7 +56,7 @@ export const PostCard = ({
           (min-width: 1536px) 25vw
         "
         src={`https://images.wannabes.be/S=W800,H800,PD2/${thumbnail}`}
-        alt={`${artist} at ${venue}`}
+        alt={`${artist} at ${event ? event : venue}`}
         width={dimensions.width}
         height={dimensions.height}
         onError={() => {
@@ -65,10 +67,10 @@ export const PostCard = ({
           display: isError ? "none" : "block",
         }}
       />
-      <figcaption className="absolute bottom-0 flex justify-between items-end w-full text-black py-2 px-4 text-white gap-4">
+      <figcaption className="absolute bottom-0 flex justify-between items-end w-full text-black py-2 px-4 text-white gap-4 text-sm">
         <p>{formatPostDate(date)}</p>
-        <p className="text-l">
-          {artist} — {venue}
+        <p>
+          {artist} — {event ? event : venue}
         </p>
       </figcaption>
     </figure>

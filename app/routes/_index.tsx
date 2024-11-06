@@ -121,6 +121,7 @@ export default function Index() {
                       <PostCard
                         artist={p.artist.name}
                         venue={p.venue.name}
+                        event={p.event?.name}
                         date={p.date}
                         thumbnail={p.thumbnail.hires}
                         dimensions={p.thumbnail.dimensions}

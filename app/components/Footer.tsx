@@ -54,7 +54,7 @@ export const Footer = () => {
               </span>
             ))}
           </div>
-          <h3 className="text-xl uppercase mb-4 font-semibold border-b-2 border-white">
+          {/* <h3 className="text-xl uppercase mb-4 font-semibold border-b-2 border-white">
             Mailing list
           </h3>
           <p>
@@ -71,7 +71,7 @@ export const Footer = () => {
             <button type="submit" className="py-2 px-4">
               Signup
             </button>
-          </form>
+          </form> */}
         </section>
 
         <section className="self-end text-right justify-self-end md:col-start-2 lg:col-start-3">

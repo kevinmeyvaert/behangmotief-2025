@@ -63,7 +63,7 @@ export const AlbumGallery = ({ post }: Props) => {
       <header className="text-center mb-5">
         <h1 className="text-4xl font-bold">{post.artist.name}</h1>
         <p className="text-gray-500">
-          {post.venue.name} — <time>{formatPostDate(post.date)}</time>
+          <time>{formatPostDate(post.date)}</time> – {post.venue.name}
         </p>
       </header>
       <Masonry
