@@ -7,11 +7,12 @@ import {
   defer,
   Link,
   useLoaderData,
-  useNavigate,
+  useRevalidator,
+  useRouteError,
   useSearchParams,
 } from "@remix-run/react";
 import { SearchQuery } from "~/types/wannabes.types";
-import { FormEvent, Suspense } from "react";
+import { Suspense } from "react";
 import Masonry from "react-masonry-css";
 import Pagination from "~/components/Pagination";
 import { PostCard } from "~/components/PostCard";
@@ -35,6 +36,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 import profile from "../images/profile.jpg";
+import { Search } from "~/components/Search";
 
 export const meta: MetaFunction = () => {
   const title = "Behangmotief — Music & festival photographer";
@@ -66,42 +68,37 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export default function Index() {
-  const data = useLoaderData<typeof loader>();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const searchValue = (form.elements.namedItem("search") as HTMLInputElement)
-      .value;
-    if (searchValue) {
-      navigate({
-        pathname: "/",
-        search: `?search=${encodeURIComponent(searchValue.trim())}&page=1`,
-      });
-    }
-  };
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const revalidator = useRevalidator();
 
   return (
     <div className="container">
-      <form
-        onSubmit={handleSearch}
-        className="flex mb-5 w-full justify-center"
-        key={searchParams.get("search")}
-      >
-        <input
-          type="text"
-          name="search"
-          defaultValue={searchParams.get("search") ?? ""}
-          placeholder="Search an artist or venue..."
-          className="appearance-none rounded-none p-4 text-m bg-[white] w-full max-w-96 border-b-4 border-black"
-        />
-        <button type="submit" className="py-2 px-4">
-          Search
-        </button>
-      </form>
+      <Search />
+      <main>
+        <div className="py-20 flex items-center justify-center flex-col">
+          <h1 className="text-4xl font-bold">Something went wrong!</h1>
+          <p className="text-gray-500 mb-5">{(error as Error).message}</p>
+          <button
+            className="flex items-center justify-center bg-black text-white px-4 min-h-10"
+            onClick={revalidator.revalidate}
+            disabled={revalidator.state === "loading"}
+          >
+            Try again
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default function Index() {
+  const data = useLoaderData<typeof loader>();
+  const [searchParams] = useSearchParams();
+
+  return (
+    <div className="container">
+      <Search />
       <main>
         <Suspense fallback={<MasonryLoadingState />}>
           <Await resolve={data.posts}>
