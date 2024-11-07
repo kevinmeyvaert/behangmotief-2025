@@ -6,6 +6,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { Analytics } from "@vercel/analytics/react";
 
 import "./tailwind.css";
 import "./styles/index.css";
@@ -38,6 +40,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
