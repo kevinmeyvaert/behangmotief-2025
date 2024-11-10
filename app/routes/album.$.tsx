@@ -1,9 +1,12 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { MetaFunction, useLoaderData } from "@remix-run/react";
+import { Link, MetaFunction, useLoaderData } from "@remix-run/react";
 import { AlbumGallery } from "~/components/AlbumGallery";
+import { RelatedCard } from "~/components/RelatedCard";
+import { RelatedContentRow } from "~/components/RelatedContentRow";
 import { fetcher } from "~/lib/api";
-import { ALBUM } from "~/queries/wannabes";
-import { AlbumQuery } from "~/types/wannabes.types";
+import { checkThumbnails } from "~/lib/ownThumbnail";
+import { ALBUM, RELATED_ALBUMS } from "~/queries/wannabes";
+import { AlbumQuery, RelatedPostsQuery } from "~/types/wannabes.types";
 
 const descriptions = (venue?: string, artist?: string) => [
   `Explore an electrifying collection of live photos capturing ${artist}'s unforgettable performance at ${venue}. Taken by Behangmotief, a music photographer known for vibrant, high-energy shots.`,
@@ -22,12 +25,19 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { post } = await fetcher<AlbumQuery>(ALBUM, {
     slug: params["*"],
   });
+  const {
+    sameArtist: { data: sameArtist },
+    sameVenue: { data: sameVenue },
+  } = await fetcher<RelatedPostsQuery>(RELATED_ALBUMS, {
+    artistSlug: post.artist.slug,
+    venueSlug: post.venue.slug,
+  });
   const description = descriptions(post.venue.name, post.artist.name)[
     Math.floor(
       Math.random() * descriptions(post.venue.name, post.artist.name).length,
     )
   ];
-  return { post, description };
+  return { post, description, sameArtist, sameVenue };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
@@ -64,11 +74,29 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function Album() {
-  const { post } = useLoaderData<typeof loader>();
+  const { post, sameArtist, sameVenue } = useLoaderData<typeof loader>();
 
   return (
     <main className="container px-4 sm:px-0">
       <AlbumGallery post={post} />
+      {sameArtist.filter((p) => p.id !== post.id).length ? (
+        <RelatedContentRow
+          relatedPosts={sameArtist}
+          title={`More from ${post.artist.name}`}
+          postId={post.id}
+          className="my-12"
+          type="artist"
+        />
+      ) : null}
+      {sameVenue.filter((p) => p.id !== post.id).length ? (
+        <RelatedContentRow
+          relatedPosts={sameVenue}
+          title={`More at ${post.venue.name}`}
+          postId={post.id}
+          className="my-12"
+          type="venue"
+        />
+      ) : null}
     </main>
   );
 }

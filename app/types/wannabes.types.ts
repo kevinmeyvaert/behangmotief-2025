@@ -422,14 +422,19 @@ export type SearchQueryVariables = Exact<{
 
 export type SearchQuery = { __typename?: 'Query', posts: { __typename?: 'PostList', data: Array<{ __typename?: 'Post', id: string, date: any, slug: string, artist: { __typename?: 'Artist', name: string }, images: Array<{ __typename?: 'Image', blurhash: string, resized: string, photographer: { __typename?: 'Photographer', firstName: string } }>, thumbnail: { __typename?: 'Image', blurhash: string, hires: string, photographer: { __typename?: 'Photographer', firstName: string }, dimensions: { __typename?: 'Dimensions', width: number, height: number } }, venue: { __typename?: 'Venue', id: string, name: string }, event: { __typename?: 'Event', name: string } }>, pagination: { __typename?: 'Pagination', start: number, limit: number, total: number } } };
 
-export type GetAlbumPathsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAlbumPathsQuery = { __typename?: 'Query', posts: { __typename?: 'PostList', data: Array<{ __typename?: 'Post', slug: string }> } };
-
 export type AlbumQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type AlbumQuery = { __typename?: 'Query', post: { __typename?: 'Post', date: any, id: string, url: string, thumbnail: { __typename?: 'Image', resized: string, photographer: { __typename?: 'Photographer', firstName: string } }, artist: { __typename?: 'Artist', name: string }, venue: { __typename?: 'Venue', name: string }, event: { __typename?: 'Event', name: string }, images: Array<{ __typename?: 'Image', blurhash: string, hires: string, dimensions: { __typename?: 'Dimensions', width: number, height: number }, photographer: { __typename?: 'Photographer', firstName: string } }> } };
+export type AlbumQuery = { __typename?: 'Query', post: { __typename?: 'Post', date: any, id: string, url: string, thumbnail: { __typename?: 'Image', resized: string, photographer: { __typename?: 'Photographer', firstName: string } }, artist: { __typename?: 'Artist', name: string, slug: string }, venue: { __typename?: 'Venue', name: string, slug: string }, event: { __typename?: 'Event', name: string }, images: Array<{ __typename?: 'Image', blurhash: string, hires: string, dimensions: { __typename?: 'Dimensions', width: number, height: number }, photographer: { __typename?: 'Photographer', firstName: string } }> } };
+
+export type RelatedPostsQueryVariables = Exact<{
+  artistSlug: InputMaybe<Scalars['String']['input']>;
+  venueSlug: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type RelatedPostsQuery = { __typename?: 'Query', sameArtist: { __typename?: 'PostList', data: Array<{ __typename?: 'Post', id: string, slug: string, date: any, venue: { __typename?: 'Venue', name: string }, artist: { __typename?: 'Artist', name: string }, thumbnail: { __typename?: 'Image', hires: string, blurhash: string, photographer: { __typename?: 'Photographer', firstName: string }, dimensions: { __typename?: 'Dimensions', width: number, height: number } }, images: Array<{ __typename?: 'Image', blurhash: string, resized: string, photographer: { __typename?: 'Photographer', firstName: string } }>, event: { __typename?: 'Event', name: string } }> }, sameVenue: { __typename?: 'PostList', data: Array<{ __typename?: 'Post', id: string, slug: string, date: any, venue: { __typename?: 'Venue', name: string }, artist: { __typename?: 'Artist', name: string }, thumbnail: { __typename?: 'Image', hires: string, blurhash: string, photographer: { __typename?: 'Photographer', firstName: string }, dimensions: { __typename?: 'Dimensions', width: number, height: number } }, images: Array<{ __typename?: 'Image', blurhash: string, resized: string, photographer: { __typename?: 'Photographer', firstName: string } }>, event: { __typename?: 'Event', name: string } }> } };
+
+export type RelatedPostFieldsFragment = { __typename?: 'Post', id: string, slug: string, date: any, venue: { __typename?: 'Venue', name: string }, artist: { __typename?: 'Artist', name: string }, thumbnail: { __typename?: 'Image', hires: string, blurhash: string, photographer: { __typename?: 'Photographer', firstName: string }, dimensions: { __typename?: 'Dimensions', width: number, height: number } }, images: Array<{ __typename?: 'Image', blurhash: string, resized: string, photographer: { __typename?: 'Photographer', firstName: string } }>, event: { __typename?: 'Event', name: string } };

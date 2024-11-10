@@ -50,20 +50,6 @@ export const POSTS = gql`
   }
 `;
 
-export const ALBUM_PATHS = gql`
-  query GetAlbumPaths {
-    posts: postSearch(
-      photographerSlug: "kevin-meyvaert"
-      start: 0
-      limit: 500
-    ) {
-      data {
-        slug
-      }
-    }
-  }
-`;
-
 export const ALBUM = gql`
   query Album($slug: String) {
     post(slug: $slug) {
@@ -78,9 +64,11 @@ export const ALBUM = gql`
       url
       artist {
         name
+        slug
       }
       venue {
         name
+        slug
       }
       event {
         name
@@ -96,6 +84,64 @@ export const ALBUM = gql`
           firstName
         }
       }
+    }
+  }
+`;
+
+export const RELATED_ALBUMS = gql`
+  query relatedPosts($artistSlug: String, $venueSlug: String) {
+    sameArtist: postSearch(
+      artistSlug: $artistSlug
+      limit: 5
+      random: true
+      photographerSlug: "kevin-meyvaert"
+    ) {
+      data {
+        ...relatedPostFields
+      }
+    }
+    sameVenue: postSearch(
+      venueSlug: $venueSlug
+      limit: 5
+      random: true
+      photographerSlug: "kevin-meyvaert"
+    ) {
+      data {
+        ...relatedPostFields
+      }
+    }
+  }
+
+  fragment relatedPostFields on Post {
+    id
+    slug
+    venue {
+      name
+    }
+    artist {
+      name
+    }
+    thumbnail {
+      hires
+      blurhash
+      photographer {
+        firstName
+      }
+      dimensions {
+        width
+        height
+      }
+    }
+    images {
+      blurhash
+      photographer {
+        firstName
+      }
+      resized(width: 1200, height: 800)
+    }
+    date
+    event {
+      name
     }
   }
 `;

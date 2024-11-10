@@ -1,7 +1,10 @@
-import { SearchQuery } from "~/types/wannabes.types";
+import { RelatedPostsQuery, SearchQuery } from "~/types/wannabes.types";
 
 export const checkThumbnails = (
-  album: SearchQuery["posts"]["data"][number],
+  album:
+    | SearchQuery["posts"]["data"][number]
+    | RelatedPostsQuery["sameArtist"]["data"][number]
+    | RelatedPostsQuery["sameVenue"]["data"][number],
 ) => {
   if (album.thumbnail.photographer?.firstName !== "Kevin") {
     const kevThumbnail = album.images.filter(
