@@ -34,7 +34,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
       Math.random() * descriptions(post.venue.name, post.artist.name).length,
     )
   ];
-  return defer({ post, description, relatedPostsPromise });
+  return defer(
+    { post, description, relatedPostsPromise },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=300, s-maxage=600",
+      },
+    },
+  );
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {

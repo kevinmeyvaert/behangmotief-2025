@@ -25,9 +25,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     limit: POSTS_PER_PAGE,
     all: searchParam,
   });
-  return defer({
-    posts: postsPromise,
-  });
+  return defer(
+    {
+      posts: postsPromise,
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=300, s-maxage=600",
+      },
+    },
+  );
 };
 
 import profile from "../images/profile.jpg";
