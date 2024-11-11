@@ -20,6 +20,7 @@ export const AlbumImage = ({ image, index, onSetIndex }: Props) => {
       <Blurhash
         hash={validatedBlurhash(image.blurhash)}
         width={`${fallbackWidth}px`}
+        height={"100%"}
         resolutionX={50}
         resolutionY={50}
         punch={1}
@@ -33,6 +34,8 @@ export const AlbumImage = ({ image, index, onSetIndex }: Props) => {
       <img
         src={`https://images.wannabes.be/S=W800,H800,PD2/${image.hires}`}
         className="w-full absolute drop-shadow"
+        width={image.dimensions?.width}
+        height={image.dimensions?.height}
       />
     </button>
   );

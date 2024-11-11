@@ -32,6 +32,7 @@ export const PostCard = ({
       <Blurhash
         hash={validatedBlurhash(blurhash)}
         width={`${fallbackWidth}px`}
+        height={"100%"}
         resolutionX={50}
         resolutionY={50}
         punch={1}
