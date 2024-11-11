@@ -13,7 +13,6 @@ import {
 import { SearchQuery } from "~/types/wannabes.types";
 import { Suspense } from "react";
 import Pagination from "~/components/Pagination";
-import { MasonryLoadingState } from "~/components/MasonryLoadingState";
 
 const POSTS_PER_PAGE = 15;
 
@@ -34,6 +33,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 import profile from "../images/profile.jpg";
 import { Search } from "~/components/Search";
 import { HomepageMasonry } from "~/components/HomepageMasonry";
+import { HomepageMasonryLoadingState } from "~/components/HomepageMasonryLoadingState";
 
 export const meta: MetaFunction = () => {
   const title = "Behangmotief — Music & festival photographer";
@@ -97,7 +97,7 @@ export default function Index() {
     <div className="container">
       <Search />
       <main>
-        <Suspense fallback={<MasonryLoadingState />}>
+        <Suspense fallback={<HomepageMasonryLoadingState />}>
           <Await resolve={data.posts}>
             {({ posts }) => (
               <>
