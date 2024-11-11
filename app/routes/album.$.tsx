@@ -1,10 +1,8 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, MetaFunction, useLoaderData } from "@remix-run/react";
+import { MetaFunction, useLoaderData } from "@remix-run/react";
 import { AlbumGallery } from "~/components/AlbumGallery";
-import { RelatedCard } from "~/components/RelatedCard";
 import { RelatedContentRow } from "~/components/RelatedContentRow";
 import { fetcher } from "~/lib/api";
-import { checkThumbnails } from "~/lib/ownThumbnail";
 import { ALBUM, RELATED_ALBUMS } from "~/queries/wannabes";
 import { AlbumQuery, RelatedPostsQuery } from "~/types/wannabes.types";
 

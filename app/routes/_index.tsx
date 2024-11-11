@@ -5,7 +5,6 @@ import { POSTS } from "~/queries/wannabes";
 import {
   Await,
   defer,
-  Link,
   useLoaderData,
   useRevalidator,
   useRouteError,
@@ -13,10 +12,7 @@ import {
 } from "@remix-run/react";
 import { SearchQuery } from "~/types/wannabes.types";
 import { Suspense } from "react";
-import Masonry from "react-masonry-css";
 import Pagination from "~/components/Pagination";
-import { PostCard } from "~/components/PostCard";
-import { checkThumbnails } from "~/lib/ownThumbnail";
 import { MasonryLoadingState } from "~/components/MasonryLoadingState";
 
 const POSTS_PER_PAGE = 15;
@@ -37,6 +33,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 import profile from "../images/profile.jpg";
 import { Search } from "~/components/Search";
+import { HomepageMasonry } from "~/components/HomepageMasonry";
 
 export const meta: MetaFunction = () => {
   const title = "Behangmotief — Music & festival photographer";
@@ -104,29 +101,7 @@ export default function Index() {
           <Await resolve={data.posts}>
             {({ posts }) => (
               <>
-                <Masonry
-                  breakpointCols={{
-                    default: 3,
-                    1023: 2,
-                    767: 1,
-                  }}
-                  className="c-masonry"
-                  columnClassName="c-masonry--grid-column"
-                >
-                  {posts.data.map(checkThumbnails).map((p) => (
-                    <Link to={`/album/${p.slug}`} key={p.id}>
-                      <PostCard
-                        artist={p.artist.name}
-                        venue={p.venue.name}
-                        event={p.event?.name}
-                        date={p.date}
-                        thumbnail={p.thumbnail.hires}
-                        dimensions={p.thumbnail.dimensions}
-                        blurhash={p.thumbnail.blurhash}
-                      />
-                    </Link>
-                  ))}
-                </Masonry>
+                <HomepageMasonry posts={posts} />
                 <Pagination
                   limit={POSTS_PER_PAGE}
                   start={posts.pagination.start}

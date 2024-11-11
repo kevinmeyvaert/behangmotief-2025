@@ -1,5 +1,3 @@
-import Masonry from "react-masonry-css";
-import { AlbumImage } from "./AlbumImage";
 import Lightbox from "yet-another-react-lightbox";
 import { AlbumQuery } from "~/types/wannabes.types";
 import { useMemo, useState } from "react";
@@ -7,6 +5,7 @@ import { useMemo, useState } from "react";
 import "yet-another-react-lightbox/styles.css";
 import { aspectRatio } from "~/lib/blurhash";
 import { formatPostDate } from "~/lib/date";
+import { AlbumMasonry } from "./AlbumMasonry";
 
 interface Props {
   post: AlbumQuery["post"];
@@ -14,13 +13,13 @@ interface Props {
 
 export const AlbumGallery = ({ post }: Props) => {
   const [index, setIndex] = useState(-1);
-  const behangmotiefImages = useMemo(
+  const images = useMemo(
     () => post.images.filter((i) => i.photographer?.firstName === "Kevin"),
     [post.images],
   );
   const slides = useMemo(
     () =>
-      behangmotiefImages.map((image) => ({
+      images.map((image) => ({
         src: `https://images.wannabes.be/S=W800,H800,PD2/${image.hires}`,
         width: image.dimensions?.width,
         height: image.dimensions?.height,
@@ -55,7 +54,7 @@ export const AlbumGallery = ({ post }: Props) => {
           },
         ],
       })),
-    [behangmotiefImages],
+    [images],
   );
 
   return (
@@ -66,24 +65,7 @@ export const AlbumGallery = ({ post }: Props) => {
           <time>{formatPostDate(post.date)}</time> – {post.venue.name}
         </p>
       </header>
-      <Masonry
-        breakpointCols={{
-          default: 4,
-          1023: 3,
-          767: 2,
-        }}
-        className="c-masonry"
-        columnClassName="c-masonry--grid-column"
-      >
-        {behangmotiefImages.map((image, index) => (
-          <AlbumImage
-            key={image.blurhash}
-            image={image}
-            index={index}
-            onSetIndex={setIndex}
-          />
-        ))}
-      </Masonry>
+      <AlbumMasonry images={images} onSetIndex={setIndex} />
       <Lightbox
         index={index}
         slides={slides}
