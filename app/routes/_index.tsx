@@ -41,6 +41,7 @@ import profile from "../images/profile.jpg";
 import { Search } from "~/components/Search";
 import { HomepageMasonry } from "~/components/HomepageMasonry";
 import { HomepageMasonryLoadingState } from "~/components/HomepageMasonryLoadingState";
+import { NoSearchResults } from "~/components/NoSearchResults";
 
 export const meta: MetaFunction = () => {
   const title = "Behangmotief — Music & festival photographer";
@@ -106,21 +107,29 @@ export default function Index() {
       <main>
         <Suspense fallback={<HomepageMasonryLoadingState />}>
           <Await resolve={data.posts}>
-            {({ posts }) => (
-              <>
-                <HomepageMasonry posts={posts} />
-                <Pagination
-                  limit={POSTS_PER_PAGE}
-                  start={posts.pagination.start}
-                  total={posts.pagination.total}
-                  path={
-                    searchParams.get("search")
-                      ? `?search=${searchParams.get("search")}&page=[page]`
-                      : `?page=[page]`
-                  }
-                />
-              </>
-            )}
+            {({ posts }) => {
+              const hasPosts = posts.pagination.total > 0;
+              if (!hasPosts) {
+                return (
+                  <NoSearchResults searchQuery={searchParams.get("search")} />
+                );
+              }
+              return (
+                <>
+                  <HomepageMasonry posts={posts} />
+                  <Pagination
+                    limit={POSTS_PER_PAGE}
+                    start={posts.pagination.start}
+                    total={posts.pagination.total}
+                    path={
+                      searchParams.get("search")
+                        ? `?search=${searchParams.get("search")}&page=[page]`
+                        : `?page=[page]`
+                    }
+                  />
+                </>
+              );
+            }}
           </Await>
         </Suspense>
       </main>
