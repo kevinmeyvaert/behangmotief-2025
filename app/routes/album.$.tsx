@@ -1,12 +1,12 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { Await, defer, MetaFunction, useLoaderData } from "@remix-run/react";
-import { Suspense } from "react";
-import { AlbumGallery } from "~/components/AlbumGallery";
-import { RelatedContentRow } from "~/components/RelatedContentRow";
-import { RelatedContentRowLoadingState } from "~/components/RelatedContentRowLoadingState";
-import { fetcher } from "~/lib/api";
-import { ALBUM, RELATED_ALBUMS } from "~/queries/wannabes";
-import { AlbumQuery, RelatedPostsQuery } from "~/types/wannabes.types";
+import { LoaderFunctionArgs } from '@remix-run/node';
+import { Await, defer, MetaFunction, useLoaderData } from '@remix-run/react';
+import { Suspense } from 'react';
+import { AlbumGallery } from '~/components/AlbumGallery';
+import { RelatedContentRow } from '~/components/RelatedContentRow';
+import { RelatedContentRowLoadingState } from '~/components/RelatedContentRowLoadingState';
+import { fetcher } from '~/lib/api';
+import { ALBUM, RELATED_ALBUMS } from '~/queries/wannabes';
+import { AlbumQuery, RelatedPostsQuery } from '~/types/wannabes.types';
 
 const descriptions = (venue?: string, artist?: string) => [
   `Explore an electrifying collection of live photos capturing ${artist}'s unforgettable performance at ${venue}. Taken by Behangmotief, a music photographer known for vibrant, high-energy shots.`,
@@ -23,22 +23,20 @@ const descriptions = (venue?: string, artist?: string) => [
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { post } = await fetcher<AlbumQuery>(ALBUM, {
-    slug: params["*"],
+    slug: params['*'],
   });
   const relatedPostsPromise = fetcher<RelatedPostsQuery>(RELATED_ALBUMS, {
     artistSlug: post.artist.slug,
     venueSlug: post.venue.slug,
   });
   const description = descriptions(post.venue.name, post.artist.name)[
-    Math.floor(
-      Math.random() * descriptions(post.venue.name, post.artist.name).length,
-    )
+    Math.floor(Math.random() * descriptions(post.venue.name, post.artist.name).length)
   ];
   return defer(
     { post, description, relatedPostsPromise },
     {
       headers: {
-        "Cache-Control": "public, max-age=300, s-maxage=600",
+        'Cache-Control': 'public, max-age=300, s-maxage=600',
       },
     },
   );
@@ -51,27 +49,27 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
       title,
     },
     {
-      name: "description",
+      name: 'description',
       content: data?.description,
     },
     {
-      name: "og:image",
+      name: 'og:image',
       content: data?.post.thumbnail.resized,
     },
     {
-      name: "og:site_name",
-      content: "Behangmotief — Music- & festivalphotographer",
+      name: 'og:site_name',
+      content: 'Behangmotief — Music- & festivalphotographer',
     },
     {
-      name: "og:title",
+      name: 'og:title',
       content: title,
     },
     {
-      name: "og:description",
+      name: 'og:description',
       content: data?.description,
     },
     {
-      name: "og:url",
+      name: 'og:url',
       content: `https://behangmotief.be${location.pathname}`,
     },
   ];
@@ -81,9 +79,9 @@ export default function Album() {
   const { post, relatedPostsPromise } = useLoaderData<typeof loader>();
 
   return (
-    <main className="container px-4 sm:px-0">
+    <main className='container px-4 sm:px-0'>
       <AlbumGallery post={post} />
-      <Suspense fallback={<RelatedContentRowLoadingState className="my-12" />}>
+      <Suspense fallback={<RelatedContentRowLoadingState className='my-12' />}>
         <Await resolve={relatedPostsPromise}>
           {({ sameArtist, sameVenue }) => (
             <>
@@ -92,8 +90,8 @@ export default function Album() {
                   relatedPosts={sameArtist.data}
                   title={`More from ${post.artist.name}`}
                   postId={post.id}
-                  className="my-12"
-                  type="artist"
+                  className='my-12'
+                  type='artist'
                 />
               ) : null}
               {sameVenue.data.filter((p) => p.id !== post.id).length ? (
@@ -101,8 +99,8 @@ export default function Album() {
                   relatedPosts={sameVenue.data}
                   title={`More at ${post.venue.name}`}
                   postId={post.id}
-                  className="my-12"
-                  type="venue"
+                  className='my-12'
+                  type='venue'
                 />
               ) : null}
             </>

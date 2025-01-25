@@ -1,10 +1,10 @@
-import { AlbumImage } from "./AlbumImage";
+import { AlbumImage } from './AlbumImage';
 
-import Masonry from "react-masonry-css";
-import { AlbumQuery } from "~/types/wannabes.types";
+import Masonry from 'react-masonry-css';
+import { AlbumQuery } from '~/types/wannabes.types';
 
 interface Props {
-  images: AlbumQuery["post"]["images"];
+  images: AlbumQuery['post']['images'];
   onSetIndex: (index: number) => void;
 }
 
@@ -15,57 +15,42 @@ interface Props {
 export const AlbumMasonry = ({ images, onSetIndex }: Props) => {
   return (
     <>
-      <div className="hidden lg:block">
+      <div className='hidden lg:block'>
         <Masonry
           breakpointCols={{
             default: 4,
           }}
-          className="c-masonry"
-          columnClassName="c-masonry--grid-column"
+          className='c-masonry'
+          columnClassName='c-masonry--grid-column'
         >
           {images.map((image, index) => (
-            <AlbumImage
-              key={image.blurhash}
-              image={image}
-              index={index}
-              onSetIndex={onSetIndex}
-            />
+            <AlbumImage key={image.blurhash} image={image} index={index} onSetIndex={onSetIndex} />
           ))}
         </Masonry>
       </div>
-      <div className="hidden md:block lg:hidden">
+      <div className='hidden md:block lg:hidden'>
         <Masonry
           breakpointCols={{
             default: 3,
           }}
-          className="c-masonry"
-          columnClassName="c-masonry--grid-column"
+          className='c-masonry'
+          columnClassName='c-masonry--grid-column'
         >
           {images.map((image, index) => (
-            <AlbumImage
-              key={image.blurhash}
-              image={image}
-              index={index}
-              onSetIndex={onSetIndex}
-            />
+            <AlbumImage key={image.blurhash} image={image} index={index} onSetIndex={onSetIndex} />
           ))}
         </Masonry>
       </div>
-      <div className="md:hidden">
+      <div className='md:hidden'>
         <Masonry
           breakpointCols={{
             default: 2,
           }}
-          className="c-masonry"
-          columnClassName="c-masonry--grid-column"
+          className='c-masonry'
+          columnClassName='c-masonry--grid-column'
         >
           {images.map((image, index) => (
-            <AlbumImage
-              key={image.blurhash}
-              image={image}
-              index={index}
-              onSetIndex={onSetIndex}
-            />
+            <AlbumImage key={image.blurhash} image={image} index={index} onSetIndex={onSetIndex} />
           ))}
         </Masonry>
       </div>

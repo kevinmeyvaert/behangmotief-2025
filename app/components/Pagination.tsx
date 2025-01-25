@@ -1,7 +1,6 @@
-import { Link } from "@remix-run/react";
+import { Link } from '@remix-run/react';
 
-const buildLink = (path: string, page: number) =>
-  path.replace("[page]", page.toString());
+const buildLink = (path: string, page: number) => path.replace('[page]', page.toString());
 
 interface NumberProps {
   page: number;
@@ -14,7 +13,7 @@ const Number = ({ page, currentPage, path, position }: NumberProps) => {
   return (
     <li
       key={`position-${position}`}
-      className={`${page === currentPage ? "flex items-center justify-center font-bold bg-black text-white min-h-10 min-w-10" : ""} ${position} pagination-item`}
+      className={`${page === currentPage ? 'flex items-center justify-center font-bold bg-black text-white min-h-10 min-w-10' : ''} ${position} pagination-item`}
     >
       <Link to={buildLink(path, page)}>{page}</Link>
     </li>
@@ -52,7 +51,7 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
           page={page}
           currentPage={currentPage}
           path={path}
-          position="lead"
+          position='lead'
         />,
       );
       continue;
@@ -66,7 +65,7 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
           page={page}
           currentPage={currentPage}
           path={path}
-          position="tail"
+          position='tail'
         />,
       );
       continue;
@@ -80,28 +79,22 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
           page={page}
           currentPage={currentPage}
           path={path}
-          position="center"
+          position='center'
         />,
       );
       continue;
     }
 
     // Insert a single break if necessary
-    if (
-      items[items.length - 1]?.key !== "break-left" &&
-      page < currentPage - leftSide
-    ) {
+    if (items[items.length - 1]?.key !== 'break-left' && page < currentPage - leftSide) {
       items.push(
-        <li key="break-left" className="pagination-item">
+        <li key='break-left' className='pagination-item'>
           ...
         </li>,
       );
-    } else if (
-      items[items.length - 1]?.key !== "break-right" &&
-      page > currentPage + rightSide
-    ) {
+    } else if (items[items.length - 1]?.key !== 'break-right' && page > currentPage + rightSide) {
       items.push(
-        <li key="break-right" className="pagination-item">
+        <li key='break-right' className='pagination-item'>
           ...
         </li>,
       );
@@ -109,13 +102,13 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
   }
 
   return numberOfPages > 1 ? (
-    <div className="w-full flex justify-center pt-3 pb-8">
-      <ul className="flex items-center gap-8">
+    <div className='w-full flex justify-center pt-3 pb-8'>
+      <ul className='flex items-center gap-8'>
         {hasPrevious ? (
           <li key={`pagination-previous`}>
             <Link
               to={buildLink(path, currentPage - 1)}
-              className="flex items-center justify-center bg-black text-white px-4 min-h-10"
+              className='flex items-center justify-center bg-black text-white px-4 min-h-10'
             >
               ← <span>previous</span>
             </Link>
@@ -126,7 +119,7 @@ const Pagination = ({ start, limit, total, path }: PaginationProps) => {
           <li key={`pagination-next`}>
             <Link
               to={buildLink(path, currentPage + 1)}
-              className="flex items-center justify-center bg-black text-white px-4 min-h-10"
+              className='flex items-center justify-center bg-black text-white px-4 min-h-10'
             >
               <span>next</span> →
             </Link>

@@ -9,7 +9,10 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
-    "codegen": "graphql-codegen -c wannabes.yml"
+    "codegen": "graphql-codegen -c wannabes.yml",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "lint:fix": "eslint --fix --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint ."
   },
   "dependencies": {
     "@remix-run/node": "^2.13.1",
@@ -47,7 +50,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "globals": "^15.11.0",
     "postcss": "^8.4.38",
-    "prettier": "3.3.3",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.1.6",
     "typescript-eslint": "^8.12.2",
