@@ -1,7 +1,12 @@
 import profile from '../images/profile.jpg';
 import logo from '../images/logo-white.svg';
+import { useFetcher } from '@remix-run/react';
 
 export const Footer = () => {
+  const fetcher = useFetcher<{ error?: string; success?: boolean }>();
+  const error = fetcher.data?.error;
+  const success = fetcher.data?.success;
+
   const referrals = [
     'Democrazy',
     'Crammerock',
@@ -54,24 +59,33 @@ export const Footer = () => {
               </span>
             ))}
           </div>
-          {/* <h3 className="text-xl uppercase mb-4 font-semibold border-b-2 border-white">
-            Mailing list
+          <h3 className='text-xl uppercase mb-4 font-semibold border-b-2 border-white'>
+            Stay in touch
           </h3>
           <p>
-            I&apos;m starting a quartery mailing list to share updates about my
-            work. Leave your mail address to stay in touch.
+            I&apos;m starting a quartery newsletter to share updates about my work. Leave your mail
+            address to stay in touch.
           </p>
-          <form className="flex mb-5 w-full justify-center">
-            <input
-              type="text"
-              name="newsletter"
-              placeholder="Your email"
-              className="appearance-none rounded-none p-4 text-m bg-black w-full border-b-4 border-white"
-            />
-            <button type="submit" className="py-2 px-4">
-              Signup
-            </button>
-          </form> */}
+          <fetcher.Form
+            className='flex mb-5 w-full justify-center flex-col'
+            method='post'
+            action='/api/subscribe'
+          >
+            <div className='flex w-full'>
+              <input type='hidden' name='origin' value='WEBSITE_FOOTER_SIGNUP' />
+              <input
+                type='email'
+                name='email'
+                placeholder='Your email'
+                className='appearance-none rounded-none p-4 text-m bg-black w-full border-b-4 border-white'
+              />
+              <button type='submit' className='py-2 px-4' disabled={fetcher.state === 'submitting'}>
+                {fetcher.state === 'submitting' ? 'Signing up...' : 'Signup'}
+              </button>
+            </div>
+            {error && <p className='text-red-500 mt-2 text-sm'>{error}</p>}
+            {success && <p className='text-green-500 mt-2 text-sm'>Subscribed!</p>}
+          </fetcher.Form>
         </section>
 
         <section className='self-end text-right justify-self-end md:col-start-2 lg:col-start-3'>
