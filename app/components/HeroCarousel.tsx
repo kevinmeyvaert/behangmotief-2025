@@ -24,11 +24,7 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
         {images.map((image, index) => (
           <CarouselItem key={index} className='h-full'>
             <div className='relative h-full'>
-              <img
-                src={image.src}
-                alt={image.alt}
-                className='w-full h-[100svh]  h-full object-cover'
-              />
+              <img src={image.src} alt={image.alt} className='w-full h-full object-cover' />
               <div className='absolute inset-0 bg-black/30' />
             </div>
           </CarouselItem>
