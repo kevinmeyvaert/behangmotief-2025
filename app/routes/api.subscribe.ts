@@ -36,7 +36,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
     await mailchimp.lists.addListMember(listId, {
       email_address: email.toLowerCase(),
-      status: 'subscribed',
+      status: 'pending',
       merge_fields: {
         ORIGIN: origin?.toString(),
       },
