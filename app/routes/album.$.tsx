@@ -2,6 +2,7 @@ import { LoaderFunctionArgs } from '@remix-run/node';
 import { Await, defer, MetaFunction, useLoaderData } from '@remix-run/react';
 import { Suspense } from 'react';
 import { AlbumGallery } from '~/components/AlbumGallery';
+import { Header } from '~/components/Header';
 import { RelatedContentRow } from '~/components/RelatedContentRow';
 import { RelatedContentRowLoadingState } from '~/components/RelatedContentRowLoadingState';
 import { fetcher } from '~/lib/api';
@@ -79,34 +80,37 @@ export default function Album() {
   const { post, relatedPostsPromise } = useLoaderData<typeof loader>();
 
   return (
-    <main className='container px-4 sm:px-0'>
-      <AlbumGallery post={post} />
-      <Suspense fallback={<RelatedContentRowLoadingState className='my-12' />}>
-        <Await resolve={relatedPostsPromise}>
-          {({ sameArtist, sameVenue }) => (
-            <>
-              {sameArtist.data.filter((p) => p.id !== post.id).length ? (
-                <RelatedContentRow
-                  relatedPosts={sameArtist.data}
-                  title={`More from ${post.artist.name}`}
-                  postId={post.id}
-                  className='my-12'
-                  type='artist'
-                />
-              ) : null}
-              {sameVenue.data.filter((p) => p.id !== post.id).length ? (
-                <RelatedContentRow
-                  relatedPosts={sameVenue.data}
-                  title={`More at ${post.venue.name}`}
-                  postId={post.id}
-                  className='my-12'
-                  type='venue'
-                />
-              ) : null}
-            </>
-          )}
-        </Await>
-      </Suspense>
-    </main>
+    <>
+      <Header />
+      <main className='container px-4 sm:px-0'>
+        <AlbumGallery post={post} />
+        <Suspense fallback={<RelatedContentRowLoadingState className='my-12' />}>
+          <Await resolve={relatedPostsPromise}>
+            {({ sameArtist, sameVenue }) => (
+              <>
+                {sameArtist.data.filter((p) => p.id !== post.id).length ? (
+                  <RelatedContentRow
+                    relatedPosts={sameArtist.data}
+                    title={`More from ${post.artist.name}`}
+                    postId={post.id}
+                    className='my-12'
+                    type='artist'
+                  />
+                ) : null}
+                {sameVenue.data.filter((p) => p.id !== post.id).length ? (
+                  <RelatedContentRow
+                    relatedPosts={sameVenue.data}
+                    title={`More at ${post.venue.name}`}
+                    postId={post.id}
+                    className='my-12'
+                    type='venue'
+                  />
+                ) : null}
+              </>
+            )}
+          </Await>
+        </Suspense>
+      </main>
+    </>
   );
 }

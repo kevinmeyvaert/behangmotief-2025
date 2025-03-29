@@ -27,7 +27,7 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
               <img
                 src={image.src}
                 alt={image.alt}
-                className='w-full h-[100svh] md:h-[66.67vw] h-full object-cover'
+                className='w-full h-[100svh]  h-full object-cover'
               />
               <div className='absolute inset-0 bg-black/30' />
             </div>

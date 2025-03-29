@@ -42,6 +42,7 @@ import { HomepageMasonryLoadingState } from '~/components/HomepageMasonryLoading
 import { NoSearchResults } from '~/components/NoSearchResults';
 import { Search } from '~/components/Search';
 import profile from '../images/profile.jpg';
+import { Header } from '~/components/Header';
 
 export const meta: MetaFunction = () => {
   const title = 'Behangmotief — Music & festival photographer';
@@ -102,35 +103,38 @@ export default function Index() {
   const [searchParams] = useSearchParams();
 
   return (
-    <div className='container'>
-      <Search />
-      <main>
-        <Suspense fallback={<HomepageMasonryLoadingState />}>
-          <Await resolve={data.posts}>
-            {({ posts }) => {
-              const hasPosts = posts.pagination.total > 0;
-              if (!hasPosts) {
-                return <NoSearchResults searchQuery={searchParams.get('search')} />;
-              }
-              return (
-                <>
-                  <HomepageMasonry posts={posts} />
-                  <Pagination
-                    limit={POSTS_PER_PAGE}
-                    start={posts.pagination.start}
-                    total={posts.pagination.total}
-                    path={
-                      searchParams.get('search')
-                        ? `?search=${searchParams.get('search')}&page=[page]`
-                        : `?page=[page]`
-                    }
-                  />
-                </>
-              );
-            }}
-          </Await>
-        </Suspense>
-      </main>
-    </div>
+    <>
+      <Header />
+      <div className='container'>
+        <Search />
+        <main>
+          <Suspense fallback={<HomepageMasonryLoadingState />}>
+            <Await resolve={data.posts}>
+              {({ posts }) => {
+                const hasPosts = posts.pagination.total > 0;
+                if (!hasPosts) {
+                  return <NoSearchResults searchQuery={searchParams.get('search')} />;
+                }
+                return (
+                  <>
+                    <HomepageMasonry posts={posts} />
+                    <Pagination
+                      limit={POSTS_PER_PAGE}
+                      start={posts.pagination.start}
+                      total={posts.pagination.total}
+                      path={
+                        searchParams.get('search')
+                          ? `?search=${searchParams.get('search')}&page=[page]`
+                          : `?page=[page]`
+                      }
+                    />
+                  </>
+                );
+              }}
+            </Await>
+          </Suspense>
+        </main>
+      </div>
+    </>
   );
 }
