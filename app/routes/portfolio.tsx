@@ -69,7 +69,7 @@ export default function Portfolio() {
             <a
               href='#about'
               onClick={scrollToAbout}
-              className='inline-block bg-white text-black px-8 py-3 text-lg font-semibold hover:bg-gray-100 transition-colors'
+              className='inline-block bg-white text-black px-6 py-3 text-md font-semibold hover:bg-gray-100 transition-colors'
             >
               About me 🙋‍♂️
             </a>
@@ -79,7 +79,7 @@ export default function Portfolio() {
         {/* Split Section */}
         <section id='about' className='min-h-[100svh] py-16 flex items-center justify-center'>
           <div className='container mx-auto'>
-            <div className='flex flex-col-reverse md:flex-row'>
+            <div className='flex flex-col-reverse md:flex-row gap-8'>
               <div className='w-full md:w-1/2'>
                 <div className='w-full h-[600px] cursor-zoom-in' onClick={() => setIndex(0)}>
                   <img
@@ -99,7 +99,7 @@ export default function Portfolio() {
                   }}
                 />
               </div>
-              <div className='w-full md:w-1/2 flex items-center justify-center p-8 md:p-16'>
+              <div className='w-full md:w-1/2 flex items-center justify-center px-8 md:p-16'>
                 <div className='max-w-lg'>
                   <h2 className='text-3xl font-bold mb-6'>Capturing the Energy of Live Music</h2>
                   <p className='text-gray-600 mb-6'>
@@ -119,8 +119,10 @@ export default function Portfolio() {
 
         {/* Services Section */}
         <section className='bg-gray-100 py-32'>
-          <div className='container mx-auto px-4'>
-            <h2 className='text-3xl font-bold text-center mb-12'>What I offer</h2>
+          <div className='container mx-auto px-4 text-center'>
+            <h2 className='text-3xl font-bold mb-12 border-b-2 border-black inline-block'>
+              What I offer
+            </h2>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
               <div className='text-center p-6'>
                 <h3 className='text-xl font-semibold mb-4'>Festival Coverage</h3>
@@ -165,8 +167,10 @@ export default function Portfolio() {
         {/* Portfolio Grid */}
         <div className='w-full bg-black text-white'>
           <div className='py-16'>
-            <div className='container mx-auto px-4'>
-              <h2 className='text-3xl font-bold text-center mb-12'>Featured Work</h2>
+            <div className='container mx-auto px-4 text-center'>
+              <h2 className='text-3xl font-bold mb-12 border-b-2 border-white inline-block'>
+                Featured Work
+              </h2>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                 <Link to='/?search=Pukkelpop' className='group relative overflow-hidden'>
                   <img
@@ -236,14 +240,16 @@ export default function Portfolio() {
         {/* Contact Section */}
         <section className='container mx-auto px-4 py-32'>
           <div className='max-w-2xl mx-auto text-center'>
-            <h2 className='text-3xl font-bold mb-6'>Let&apos;s Work Together</h2>
+            <h2 className='text-3xl font-bold mb-6 border-b-2 border-black inline-block'>
+              Let&apos;s Collaborate
+            </h2>
             <p className='text-gray-600 mb-8'>
               Ready to capture your next event or create stunning portraits? Get in touch to discuss
               your project.
             </p>
             <a
               href='mailto:hallo@behangmotief.be'
-              className='inline-block bg-black text-white px-8 py-3 text-lg font-semibold hover:bg-gray-800 transition-colors'
+              className='inline-block bg-black text-white px-6 py-3 text-md font-semibold hover:bg-gray-800 transition-colors'
             >
               Contact Me
             </a>
@@ -255,8 +261,10 @@ export default function Portfolio() {
             {({ posts: { data } }) => (
               <div className='w-full bg-black text-white'>
                 <div className='py-16'>
-                  <div className='container mx-auto px-4'>
-                    <h2 className='text-3xl font-bold text-center mb-12'>Recent Work</h2>
+                  <div className='container mx-auto px-4 text-center'>
+                    <h2 className='text-3xl font-bold mb-12 border-b-2 border-white inline-block'>
+                      Recent Work
+                    </h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                       {data
                         .map(checkThumbnails)
@@ -295,14 +303,16 @@ export default function Portfolio() {
         {/* Archive Section */}
         <section className='container mx-auto px-4 py-32'>
           <div className='max-w-2xl mx-auto text-center'>
-            <h2 className='text-3xl font-bold mb-6'>Browse my archive</h2>
+            <h2 className='text-3xl font-bold mb-6 border-b-2 border-black inline-block'>
+              Browse the archive
+            </h2>
             <p className='text-gray-600 mb-8'>
               Search photos by artist, venue or festival. Go through my archive of over 6 years of
               music photography.
             </p>
             <a
               href='/'
-              className='inline-block bg-black text-white px-8 py-3 text-lg font-semibold hover:bg-gray-800 transition-colors'
+              className='inline-block bg-black text-white px-6 py-3 text-md font-semibold hover:bg-gray-800 transition-colors'
             >
               Browse Archive
             </a>
